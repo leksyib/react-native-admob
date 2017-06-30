@@ -8,4 +8,4 @@ import PublisherBanner from './RNPublisherBanner';
 import AdMobRewarded from './RNAdMobRewarded';
 import AdMobNativeExpress from './RNAdMobNativeExpress';
 
-module.exports = { AdMobBanner, AdMobInterstitial, PublisherBanner, AdMobRewarded, RNAdMobNativeExpress };
+module.exports = { AdMobBanner, AdMobInterstitial, PublisherBanner, AdMobRewarded, AdMobNativeExpress };
