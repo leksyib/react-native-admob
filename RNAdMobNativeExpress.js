@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Platform, requireNativeComponent, View } from 'react-native';
 import _isEqual from 'lodash/isEqual';
 
+const RNBanner = requireNativeComponent('RNAdMobNativeExpress', AdMobNativeExpress);
+
 export default class AdMobNativeExpress extends Component {
   constructor() {
     super();
@@ -23,7 +25,6 @@ export default class AdMobNativeExpress extends Component {
   render() {
     if (Platform.OS === 'ios') return null
 
-    const RNBanner = requireNativeComponent('RNAdMobNativeExpress', AdMobNativeExpress);
     const { adUnitID, testDeviceID, bannerWidth, bannerHeight, didFailToReceiveAdWithError } = this.props;
     return (
       <View style={this.props.style}>
