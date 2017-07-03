@@ -23,8 +23,8 @@ RCT_EXPORT_MODULE();
   return dispatch_get_main_queue();
 }
 
-
-RCT_EXPORT_VIEW_PROPERTY(bannerSize, NSString);
+RCT_EXPORT_VIEW_PROPERTY(bannerHeight, NSNumber);
+RCT_EXPORT_VIEW_PROPERTY(bannerWidth, NSNumber);
 RCT_EXPORT_VIEW_PROPERTY(adUnitID, NSString);
 RCT_EXPORT_VIEW_PROPERTY(testDeviceID, NSString);
 

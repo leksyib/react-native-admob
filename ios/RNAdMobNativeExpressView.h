@@ -8,9 +8,10 @@
 
 @class RCTEventDispatcher;
 
-@interface RNAdMobNativeExpress : UIView <GADBannerViewDelegate>
+@interface RNAdMobNativeExpressView : UIView <GADNativeExpressAdViewDelegate>
 
-@property (nonatomic, copy) NSString *bannerSize;
+@property (nonatomic, copy) NSString *bannerWidth;
+@property (nonatomic, copy) NSString *bannerHeight;
 @property (nonatomic, copy) NSString *adUnitID;
 @property (nonatomic, copy) NSString *testDeviceID;
 
@@ -22,7 +23,6 @@
 @property (nonatomic, copy) RCTBubblingEventBlock onAdViewDidDismissScreen;
 @property (nonatomic, copy) RCTBubblingEventBlock onAdViewWillLeaveApplication;
 
-- (GADAdSize)getAdSizeFromString:(NSString *)bannerSize;
 - (void)loadBanner;
 
 @end

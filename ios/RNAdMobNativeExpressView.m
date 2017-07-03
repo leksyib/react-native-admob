@@ -11,7 +11,7 @@
 #endif
 
 @implementation RNAdMobNativeExpressView {
-  AdMobNativeExpressView  *_bannerView;
+  GADNativeExpressAdView  *_bannerView;
 }
 
 - (void)insertReactSubview:(UIView *)view atIndex:(NSInteger)atIndex
@@ -26,32 +26,34 @@
   return;
 }
 
-- (GADAdSize)getAdSizeFromString:(NSString *)bannerSize
-{
-  if ([bannerSize isEqualToString:@"banner"]) {
-    return kGADAdSizeBanner;
-  } else if ([bannerSize isEqualToString:@"largeBanner"]) {
-    return kGADAdSizeLargeBanner;
-  } else if ([bannerSize isEqualToString:@"mediumRectangle"]) {
-    return kGADAdSizeMediumRectangle;
-  } else if ([bannerSize isEqualToString:@"fullBanner"]) {
-    return kGADAdSizeFullBanner;
-  } else if ([bannerSize isEqualToString:@"leaderboard"]) {
-    return kGADAdSizeLeaderboard;
-  } else if ([bannerSize isEqualToString:@"smartBannerPortrait"]) {
-    return kGADAdSizeSmartBannerPortrait;
-  } else if ([bannerSize isEqualToString:@"smartBannerLandscape"]) {
-    return kGADAdSizeSmartBannerLandscape;
-  } else {
-    return kGADAdSizeBanner;
-  }
-}
+// - (GADAdSize)getAdSizeFromString:(NSString *)bannerSize
+// {
+//   if ([bannerSize isEqualToString:@"banner"]) {
+//     return kGADAdSizeBanner;
+//   } else if ([bannerSize isEqualToString:@"largeBanner"]) {
+//     return kGADAdSizeLargeBanner;
+//   } else if ([bannerSize isEqualToString:@"mediumRectangle"]) {
+//     return kGADAdSizeMediumRectangle;
+//   } else if ([bannerSize isEqualToString:@"fullBanner"]) {
+//     return kGADAdSizeFullBanner;
+//   } else if ([bannerSize isEqualToString:@"leaderboard"]) {
+//     return kGADAdSizeLeaderboard;
+//   } else if ([bannerSize isEqualToString:@"smartBannerPortrait"]) {
+//     return kGADAdSizeSmartBannerPortrait;
+//   } else if ([bannerSize isEqualToString:@"smartBannerLandscape"]) {
+//     return kGADAdSizeSmartBannerLandscape;
+//   } else {
+//     return kGADAdSizeBanner;
+//   }
+// }
 
--(void)loadBanner
+-(void)loadBanner 
 {
-  if (_adUnitID && _bannerSize) {
-    GADAdSize size = [self getAdSizeFromString:_bannerSize];
-    _bannerView = [[AdMobNativeExpressView alloc] initWithAdSize:size];
+  if (_adUnitID && _bannerWidth && _bannerHeight) {
+    NSInteger intWidth = [_bannerWidth intValue];
+    NSInteger intHeight = [_bannerHeight intValue];
+    GADAdSize size = GADAdSizeFromCGSize(CGSizeMake(intWidth, intHeight));
+    _bannerView = [[GADNativeExpressAdView alloc] initWithAdSize:size];
     if(!CGRectEqualToRect(self.bounds, _bannerView.bounds)) {
       if (self.onSizeChange) {
         self.onSizeChange(@{
@@ -75,10 +77,32 @@
   }
 }
 
-- (void)setBannerSize:(NSString *)bannerSize
+// - (void)setBannerSize:(NSString *)bannerSize
+// {
+//   if(![bannerSize isEqual:_bannerSize]) {
+//     _bannerSize = bannerSize;
+//     if (_bannerView) {
+//       [_bannerView removeFromSuperview];
+//     }
+//     [self loadBanner];
+//   }
+// }
+
+- (void)setBannerWidth:(NSString *)bannerWidth
 {
-  if(![bannerSize isEqual:_bannerSize]) {
-    _bannerSize = bannerSize;
+  if(![bannerWidth isEqual:_bannerWidth]) {
+    _bannerWidth = bannerWidth;
+    if (_bannerView) {
+      [_bannerView removeFromSuperview];
+    }
+    [self loadBanner];
+  }
+}
+
+- (void)setBannerHeight:(NSString *)bannerHeight
+{
+  if(![bannerHeight isEqual:_bannerHeight]) {
+    _bannerHeight = bannerHeight;
     if (_bannerView) {
       [_bannerView removeFromSuperview];
     }
@@ -110,7 +134,7 @@
 
 -(void)layoutSubviews
 {
-  [super layoutSubviews];
+  [super layoutSubviews];  
   self.frame = CGRectMake(
     self.bounds.origin.x,
     self.bounds.origin.x,
@@ -120,14 +144,14 @@
 }
 
 /// Tells the delegate an ad request loaded an ad.
-- (void)adViewDidReceiveAd:(AdMobNativeExpressView *)adView {
+- (void)adViewDidReceiveAd:(GADNativeExpressAdView *)adView {
   if (self.onAdViewDidReceiveAd) {
     self.onAdViewDidReceiveAd(@{});
   }
 }
 
 /// Tells the delegate an ad request failed.
-- (void)adView:(AdMobNativeExpressView *)adView
+- (void)adView:(GADNativeExpressAdView *)adView
 didFailToReceiveAdWithError:(GADRequestError *)error {
   if (self.onDidFailToReceiveAdWithError) {
     self.onDidFailToReceiveAdWithError(@{@"error": [error localizedDescription]});
@@ -136,21 +160,21 @@ didFailToReceiveAdWithError:(GADRequestError *)error {
 
 /// Tells the delegate that a full screen view will be presented in response
 /// to the user clicking on an ad.
-- (void)adViewWillPresentScreen:(AdMobNativeExpressView *)adView {
+- (void)adViewWillPresentScreen:(GADNativeExpressAdView *)adView {
   if (self.onAdViewWillPresentScreen) {
     self.onAdViewWillPresentScreen(@{});
   }
 }
 
 /// Tells the delegate that the full screen view will be dismissed.
-- (void)adViewWillDismissScreen:(AdMobNativeExpressView *)adView {
+- (void)adViewWillDismissScreen:(GADNativeExpressAdView *)adView {
   if (self.onAdViewWillDismissScreen) {
     self.onAdViewWillDismissScreen(@{});
   }
 }
 
 /// Tells the delegate that the full screen view has been dismissed.
-- (void)adViewDidDismissScreen:(AdMobNativeExpressView *)adView {
+- (void)adViewDidDismissScreen:(GADNativeExpressAdView *)adView {
   if (self.onAdViewDidDismissScreen) {
     self.onAdViewDidDismissScreen(@{});
   }
@@ -158,7 +182,7 @@ didFailToReceiveAdWithError:(GADRequestError *)error {
 
 /// Tells the delegate that a user click will open another app (such as
 /// the App Store), backgrounding the current app.
-- (void)adViewWillLeaveApplication:(AdMobNativeExpressView *)adView {
+- (void)adViewWillLeaveApplication:(GADNativeExpressAdView *)adView {
   if (self.onAdViewWillLeaveApplication) {
     self.onAdViewWillLeaveApplication(@{});
   }
