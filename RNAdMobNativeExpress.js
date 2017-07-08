@@ -24,8 +24,11 @@ export default class AdMobNativeExpress extends Component {
   }
 
   render() {
+<<<<<<< HEAD
     if (Platform.OS === 'ios') return null
 
+=======
+>>>>>>> nativeAdsIOS
     const { adUnitID, testDeviceID, bannerWidth, bannerHeight, didFailToReceiveAdWithError } = this.props;
     return (
       <View style={this.props.style}>
