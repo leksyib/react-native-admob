@@ -11,8 +11,6 @@
   },
   "dependencies": {
     "prop-types": "^15.5.10"
-<<<<<<< HEAD
-=======
   },
   "peerDependencies": {
     "react-native": ">=0.44.0"
@@ -21,6 +19,5 @@
     "babel-eslint": "^7.2.3",
     "eslint": "^4.3.0",
     "eslint-plugin-react": "^7.1.0"
->>>>>>> d7ed001279540b44d335defa9c9fbc4963123d0f
   }
 }

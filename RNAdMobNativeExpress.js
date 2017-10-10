@@ -1,16 +1,24 @@
-import React, { Component } from 'react';
-import { Platform, requireNativeComponent, View, ViewPropTypes } from 'react-native';
-import _isEqual from 'lodash/isEqual';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import {
+  Platform,
+  requireNativeComponent,
+  View,
+  ViewPropTypes,
+} from "react-native";
+import _isEqual from "lodash/isEqual";
+import PropTypes from "prop-types";
 
-const RNBanner = requireNativeComponent('RNAdMobNativeExpress', AdMobNativeExpress);
+const RNBanner = requireNativeComponent(
+  "RNAdMobNativeExpress",
+  AdMobNativeExpress
+);
 
 export default class AdMobNativeExpress extends Component {
   constructor() {
     super();
     this.onSizeChange = this.onSizeChange.bind(this);
     this.state = {
-      style: {}
+      style: {},
     };
   }
 
@@ -19,19 +27,26 @@ export default class AdMobNativeExpress extends Component {
     this.setState({ style: { width, height } });
   }
 
-  shouldComponentUpdate (nextProps, nextState) {
-    return !_isEqual(this.props, nextProps) || !_isEqual(this.state, nextState)
+  shouldComponentUpdate(nextProps, nextState) {
+    return !_isEqual(this.props, nextProps) || !_isEqual(this.state, nextState);
   }
 
   render() {
-    const { adUnitID, testDeviceID, bannerWidth, bannerHeight, didFailToReceiveAdWithError } = this.props;
+    const {
+      adUnitID,
+      testDeviceID,
+      bannerWidth,
+      bannerHeight,
+      didFailToReceiveAdWithError,
+    } = this.props;
     return (
       <View style={this.props.style}>
         <RNBanner
           style={this.state.style}
           onSizeChange={this.onSizeChange.bind(this)}
           onAdViewDidReceiveAd={this.props.adViewDidReceiveAd}
-          onDidFailToReceiveAdWithError={(event) => didFailToReceiveAdWithError(event.nativeEvent.error)}
+          onDidFailToReceiveAdWithError={event =>
+            didFailToReceiveAdWithError(event.nativeEvent.error)}
           onAdViewWillPresentScreen={this.props.adViewWillPresentScreen}
           onAdViewWillDismissScreen={this.props.adViewWillDismissScreen}
           onAdViewDidDismissScreen={this.props.adViewDidDismissScreen}
@@ -40,7 +55,7 @@ export default class AdMobNativeExpress extends Component {
           bannerHeight={parseInt(bannerHeight)}
           testDeviceID={testDeviceID}
           adUnitID={adUnitID}
-          />
+        />
       </View>
     );
   }
@@ -81,5 +96,5 @@ AdMobNativeExpress.propTypes = {
 AdMobNativeExpress.defaultProps = {
   bannerWidth: 400,
   bannerHeight: 300,
-  didFailToReceiveAdWithError: () => {}
+  didFailToReceiveAdWithError: () => {},
 };
