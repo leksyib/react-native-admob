@@ -21,17 +21,17 @@ public class RNAdMobPackage implements ReactPackage {
         );
     }
 
-    @Override
+    // Deprecated from RN 0.47.0
     public List<Class<? extends JavaScriptModule>> createJSModules() {
         return Collections.emptyList();
     }
 
     @Override
     public List<ViewManager> createViewManagers(ReactApplicationContext reactContext) {
-        List<ViewManager> managers = new ArrayList<>();
-        managers.add(new RNAdMobBannerViewManager());
-        managers.add(new RNPublisherBannerViewManager());
-        managers.add(new RNAdMobNativeExpressViewManager());
-        return managers;
+      return Arrays.<ViewManager>asList(
+          new RNAdMobBannerViewManager(),
+          new RNPublisherBannerViewManager(),
+          new RNAdMobNativeExpressViewManager()
+      );
     }
 }
